@@ -1,0 +1,62 @@
+---
+title: "Data Quality Monitoring Report"
+author: "Prepared by TAN Thiam Huat"
+date: 'Updated on `r format(Sys.time(), "%a %b %d %X %Y")`'
+output:
+  html_document: default
+ #   css: custom.css
+  fig_height: 6
+  fig_width: 5
+  fig_caption: yes
+  number_sections: yes
+  pdf_document: yes
+  toc: yes
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.width=12, fig.height=6, fig.path='Figs/',
+                      echo=FALSE, warning=FALSE, message=FALSE)
+```
+
+## Table of contents
+***
+This document is updated automatically on a daily basis for the purpose of Data Quality Monitoring of the Water Meters installed in Singapore. Presently, meters in Punggol, Yuhua and Tuas are currently monitored. 
+
+*Index_Availability* refers to the **Number of Index available** over the **Total Number of Index expected** per day. With a total of 607 meters for both Punggol and Tuas before 1st April 2018, the expected Number of Index per day is 24x607=14568. From 1st April 2018 onwards, 
+we have an additional of 571 meters from Yuhua, so the expected Number of Index per day is then 24x(607+571)=28272.
+
+*ConsumptionFiles_Availability* refers to the **Number of Consumption Files available** over the **Total of Number of 24 Consumption Files expected** per day.
+
+* Data Quality Monitoring Report
+
+    - [Overall Performance Plot]
+    - [Overall Performance Data]
+    - [Index Performance Plot]
+    - [Customers with No Index]
+
+    ## Overall Performance Plot
+```{r, echo=FALSE}
+dygraph(Overall_Index_ConsumptionFilesCount_xts, main = "Index & Consumption Files Availability") %>%
+  dyRangeSelector() %>%
+  dyAxis("y",label="Index & Consumption Files Availability (%)",valueRange = c(0, 110)) 
+```
+
+    ## Overall Performance Data
+```{r, echo=FALSE}
+DT::datatable(Overall_IndexConsumptionFilesCount)
+```
+
+    ## Index Performance Plot
+```{r, echo=FALSE}
+dygraph(PunggolTuasYuhua_IndexCount_xts, main = "Index Availability (Punggol,Yuhua,Tuas)") %>%
+  dyRangeSelector() %>%
+  dyAxis("y",label="Index Availability (%)",valueRange = c(0, 110)) 
+```
+
+    ## Customers with No Index
+```{r, echo=FALSE}
+DT::datatable(missing_service_point_sn)
+```
+
+Above table shows individual customer with **No Index** on each particular date. For example, you can enter a date in the Search box to show
+all customers with no index on that date.

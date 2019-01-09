@@ -1,0 +1,8 @@
+DailyHourlyIndexRate_last30days successfully completed in 52.34 seconds on 2018-10-30 09:21:56 
+DailyHourlyIndexRate_last5days successfully completed in 12.33 seconds on 2018-10-30 09:23:27 
+BillableMeters_IndexChecks_last30days successfully completed in 55.29 seconds on 2018-10-30 09:27:41 
+MapDisplay_last5days successfully completed in 5.22 seconds on 2018-10-30 09:37:05 
+MapDisplay_last30days successfully completed in 0.36 seconds on 2018-10-30 09:37:32 
+HourlyConsumptionRate successfully completed in 7.53 seconds on 2018-10-30 09:43:59 
+Counts24PerDay successfully completed in 168.53 seconds on 2018-10-30 09:50:31 
+DataFreshness successfully completed in 6.02 seconds on 2018-10-30 09:51:27 
