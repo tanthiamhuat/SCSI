@@ -4,7 +4,7 @@ in the water network towards water conservation and improvement of the operation
 
 The data comes from Automated Meter Readings in selected blocks from 3 estates in Singapore: Punggol, Tuas and Yuhua.
 
-DataAnalyticsPortal contains different directories and files.
+DataAnalyticsPortal contains different directories and files as explained below.
 
 / AutoUpdated_RScripts subdirectory contains R Scripts which are automatically run using Cron.
 
