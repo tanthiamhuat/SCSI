@@ -8,7 +8,7 @@ DataAnalyticsPortal contains different directories and files as explained below.
 
 / AutoUpdated_RScripts subdirectory contains R Scripts which are automatically run using Cron.
 
-/ data subdirectory contains the input (.csv, .xlsx) and output files (RData, fst)
+/ data subdirectory contains the input (.csv, .xlsx) and output files (.RData, .fst)
 
 / Output subdirectory contains printscreens of DAP
 
