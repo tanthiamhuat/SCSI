@@ -1,6 +1,5 @@
 local_path <- 'D:\\DataAnalyticsPortal\\'
-server_path <- '/srv/shiny-server/DataAnalyticsPortal/'
-path = local_path   
+server_path <- '/srv/shiny-server/DataAnalyticsPortal/'    
 
 shinyServer(function(input,output,session) {
   cat('Loading shiny\n')
