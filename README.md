@@ -16,4 +16,7 @@ DataAnalyticsPortal contains different directories and files.
 
 / www subdirectory contains JavaScript files and common icons.
 
+ui.R is the file where the different parts of the application's frontend (that is, what the end users see) is defined. 
+server.R , on the contrary, is the backend or the engine of the application, that is, where the data is processed.
+
 
