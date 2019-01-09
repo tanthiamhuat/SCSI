@@ -9,5 +9,5 @@ DataAnalyticsPortal contains different directories and files.
 / data subdirectory contains
 / Output subdirectory contains
 / source subdirectory contains
-/ www subdirectory contains  
+/ www subdirectory contains     
 
