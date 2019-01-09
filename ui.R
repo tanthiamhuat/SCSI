@@ -1,5 +1,5 @@
 local_path <- 'D:\\DataAnalyticsPortal\\'   
-server_path <- '/srv/shiny-server/DataAnalyticsPortal/'  
+server_path <- '/srv/shiny-server/DataAnalyticsPortal/'   
 path = local_path
 
 #source("/srv/shiny-server/DataAnalyticsPortal/global.R")
