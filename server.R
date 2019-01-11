@@ -1,4 +1,4 @@
-local_path <- 'D:\\DataAnalyticsPortal\\'
+local_path <- 'D:\\DataAnalyticsPortal\\'  
 server_path <- '/srv/shiny-server/DataAnalyticsPortal/'
 path = server_path
 
