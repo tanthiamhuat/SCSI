@@ -1,6 +1,6 @@
 local_path <- 'D:\\DataAnalyticsPortal\\'
 server_path <- '/srv/shiny-server/DataAnalyticsPortal/'
-path = local_path
+path = server_path
 
 load(paste0(path,'data/NetConsumption/PunggolWeeklyNetConsumption.RData'))
 PunggolWeeklyNetConsumptionCSV <- read.csv2(paste0(path,'data/NetConsumption/PunggolWeeklyNetConsumption.csv'),header = TRUE,sep=",")

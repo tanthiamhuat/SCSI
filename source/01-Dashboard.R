@@ -1,6 +1,6 @@
 local_path <- 'D:\\DataAnalyticsPortal\\'
 server_path <- '/srv/shiny-server/DataAnalyticsPortal/'
-path = local_path
+path = server_path
 
 load(paste0(path,'data/Dashboard.RData'))
 load(paste0(path,'data/MapDisplay_last30days.RData'))
@@ -20,12 +20,12 @@ output$TotalWeeklyConsumption_plot<- renderPlotly({
 
 ## -------- Leaks and Anomalies ------------- ##
 output$TotalDailyLeak_plot<- renderPlotly({
-  p <- plot_ly(LeakVolumePerDay_last10days, x = ~Date2, y = ~TotalLeakVolumePerDay,type = 'scatter', mode = 'lines') %>%
+  p <- plot_ly(LeakVolumePerDay_last10days, x = ~Date1, y = ~TotalLeakVolumePerDay,type = 'scatter', mode = 'lines') %>%
     layout(title = "Total Leak Volume Per Day over last 10 days",
            xaxis = list(title = "Date",tickangle = -15),
            yaxis = list (title = "Leak (Litres)",
-                         range = c(round(min(LeakVolumePerDay_last10days$LeakVolumePerDay_Total)*0.9),
-                                   round(max(LeakVolumePerDay_last10days$LeakVolumePerDay_Total)*1.1)))) %>%
+                         range = c(round(min(LeakVolumePerDay_last10days$TotalLeakVolumePerDay)*0.9),
+                                   round(max(LeakVolumePerDay_last10days$TotalLeakVolumePerDay)*1.1)))) %>%
     config(displayModeBar = F)
   p
 })
@@ -56,7 +56,7 @@ output$OverconsumptionAlarm_plot<- renderPlotly({
 })
 
 output$netconsumption_info <- renderUI({
-  if('1' %in% input$site_show){
+ # if('1' %in% input$site_show){
     ImageColorDirect <- ifelse(PunggolNetConsumptionOutput_DirectIndirect$Direct=='Green','green.png',
                         ifelse(PunggolNetConsumptionOutput_DirectIndirect$Direct=='Orange','orange.png',
                         ifelse(PunggolNetConsumptionOutput_DirectIndirect$Direct=='Red','red.png',
@@ -86,44 +86,44 @@ output$netconsumption_info <- renderUI({
                              column(4,img(src=ImageColorDirect[5],width = '20%',height = '20%'),align='center'),
                              column(4,img(src=ImageColorIndirect[5],width = '20%',height = '20%'),align='center'))
     ))
-  } else {
-    ImageColorDirect <- ifelse(YuhuaNetConsumptionOutput_DirectIndirect$Direct=='Green' ,'green.png',
-                        ifelse(YuhuaNetConsumptionOutput_DirectIndirect$Direct=='Orange','orange.png',
-                        ifelse(YuhuaNetConsumptionOutput_DirectIndirect$Direct=='Red','red.png',
-                        ifelse(YuhuaNetConsumptionOutput_DirectIndirect$Direct=='Grey','grey.png',0))))
-    ImageColorIndirect <- ifelse(YuhuaNetConsumptionOutput_DirectIndirect$Indirect=='Green','green.png',
-                          ifelse(YuhuaNetConsumptionOutput_DirectIndirect$Indirect=='Orange','orange.png',
-                          ifelse(YuhuaNetConsumptionOutput_DirectIndirect$Indirect=='Red','red.png',
-                          ifelse(YuhuaNetConsumptionOutput_DirectIndirect$Indirect=='Grey','grey.png',0))))
+  # } else {
+  #   ImageColorDirect <- ifelse(YuhuaNetConsumptionOutput_DirectIndirect$Direct=='Green' ,'green.png',
+  #                       ifelse(YuhuaNetConsumptionOutput_DirectIndirect$Direct=='Orange','orange.png',
+  #                       ifelse(YuhuaNetConsumptionOutput_DirectIndirect$Direct=='Red','red.png',
+  #                       ifelse(YuhuaNetConsumptionOutput_DirectIndirect$Direct=='Grey','grey.png',0))))
+  #   ImageColorIndirect <- ifelse(YuhuaNetConsumptionOutput_DirectIndirect$Indirect=='Green','green.png',
+  #                         ifelse(YuhuaNetConsumptionOutput_DirectIndirect$Indirect=='Orange','orange.png',
+  #                         ifelse(YuhuaNetConsumptionOutput_DirectIndirect$Indirect=='Red','red.png',
+  #                         ifelse(YuhuaNetConsumptionOutput_DirectIndirect$Indirect=='Grey','grey.png',0))))
     
-    fluidRow(column(12,
-                    fluidRow(column(12,HTML(paste('<font size = "4">',"Net Consumption",'</font>')), align = 'center')),
-                    fluidRow(column(4,HTML(paste('<font size = "4"><b>',"Block",'</b></font>')), align = 'center'),
-                             column(4,HTML(paste('<font size = "4"><b>',"Direct",'</b></font>')), align = 'center'),
-                             column(4,HTML(paste('<font size = "4"><b>',"Indirect",'</b></font>')), align = 'center')),
-                    fluidRow(column(4,HTML(paste('<font size = "3">',YuhuaNetConsumptionOutput_DirectIndirect$Block[1],'</font>')),align='center'),
-                             column(4,img(src=ImageColorDirect[1],width = '20%',height = '20%'),align='center'),
-                             column(4,img(src=ImageColorIndirect[1],width = '20%',height = '20%'),align='center')),
-                    fluidRow(column(4,HTML(paste('<font size = "3">',YuhuaNetConsumptionOutput_DirectIndirect$Block[2],'</font>')),align='center'),
-                             column(4,img(src=ImageColorDirect[2],width = '20%',height = '20%'),align='center'),
-                             column(4,img(src=ImageColorIndirect[2],width = '20%',height = '20%'),align='center')),
-                    fluidRow(column(4,HTML(paste('<font size = "3">',YuhuaNetConsumptionOutput_DirectIndirect$Block[3],'</font>')),align='center'),
-                             column(4,img(src=ImageColorDirect[3],width = '20%',height = '20%'),align='center'),
-                             column(4,img(src=ImageColorIndirect[3],width = '20%',height = '20%'),align='center')),
-                    fluidRow(column(4,HTML(paste('<font size = "3">',YuhuaNetConsumptionOutput_DirectIndirect$Block[4],'</font>')),align='center'),
-                             column(4,img(src=ImageColorDirect[4],width = '20%',height = '20%'),align='center'),
-                             column(4,img(src=ImageColorIndirect[4],width = '20%',height = '20%'),align='center')),
-                    fluidRow(column(4,HTML(paste('<font size = "3">',YuhuaNetConsumptionOutput_DirectIndirect$Block[5],'</font>')),align='center'),
-                             column(4,img(src=ImageColorDirect[5],width = '20%',height = '20%'),align='center'),
-                             column(4,img(src=ImageColorIndirect[5],width = '20%',height = '20%'),align='center')),
-                    fluidRow(column(4,HTML(paste('<font size = "3">',YuhuaNetConsumptionOutput_DirectIndirect$Block[6],'</font>')),align='center'),
-                             column(4,img(src=ImageColorDirect[6],width = '20%',height = '20%'),align='center'),
-                             column(4,img(src=ImageColorIndirect[6],width = '20%',height = '20%'),align='center')),
-                    fluidRow(column(4,HTML(paste('<font size = "3">',YuhuaNetConsumptionOutput_DirectIndirect$Block[7],'</font>')),align='center'),
-                             column(4,img(src=ImageColorDirect[7],width = '20%',height = '20%'),align='center'),
-                             column(4,img(src=ImageColorIndirect[7],width = '20%',height = '20%'),align='center'))
-    ))
-  }
+    # fluidRow(column(12,
+    #                 fluidRow(column(12,HTML(paste('<font size = "4">',"Net Consumption",'</font>')), align = 'center')),
+    #                 fluidRow(column(4,HTML(paste('<font size = "4"><b>',"Block",'</b></font>')), align = 'center'),
+    #                          column(4,HTML(paste('<font size = "4"><b>',"Direct",'</b></font>')), align = 'center'),
+    #                          column(4,HTML(paste('<font size = "4"><b>',"Indirect",'</b></font>')), align = 'center')),
+    #                 fluidRow(column(4,HTML(paste('<font size = "3">',YuhuaNetConsumptionOutput_DirectIndirect$Block[1],'</font>')),align='center'),
+    #                          column(4,img(src=ImageColorDirect[1],width = '20%',height = '20%'),align='center'),
+    #                          column(4,img(src=ImageColorIndirect[1],width = '20%',height = '20%'),align='center')),
+    #                 fluidRow(column(4,HTML(paste('<font size = "3">',YuhuaNetConsumptionOutput_DirectIndirect$Block[2],'</font>')),align='center'),
+    #                          column(4,img(src=ImageColorDirect[2],width = '20%',height = '20%'),align='center'),
+    #                          column(4,img(src=ImageColorIndirect[2],width = '20%',height = '20%'),align='center')),
+    #                 fluidRow(column(4,HTML(paste('<font size = "3">',YuhuaNetConsumptionOutput_DirectIndirect$Block[3],'</font>')),align='center'),
+    #                          column(4,img(src=ImageColorDirect[3],width = '20%',height = '20%'),align='center'),
+    #                          column(4,img(src=ImageColorIndirect[3],width = '20%',height = '20%'),align='center')),
+    #                 fluidRow(column(4,HTML(paste('<font size = "3">',YuhuaNetConsumptionOutput_DirectIndirect$Block[4],'</font>')),align='center'),
+    #                          column(4,img(src=ImageColorDirect[4],width = '20%',height = '20%'),align='center'),
+    #                          column(4,img(src=ImageColorIndirect[4],width = '20%',height = '20%'),align='center')),
+    #                 fluidRow(column(4,HTML(paste('<font size = "3">',YuhuaNetConsumptionOutput_DirectIndirect$Block[5],'</font>')),align='center'),
+    #                          column(4,img(src=ImageColorDirect[5],width = '20%',height = '20%'),align='center'),
+    #                          column(4,img(src=ImageColorIndirect[5],width = '20%',height = '20%'),align='center')),
+    #                 fluidRow(column(4,HTML(paste('<font size = "3">',YuhuaNetConsumptionOutput_DirectIndirect$Block[6],'</font>')),align='center'),
+    #                          column(4,img(src=ImageColorDirect[6],width = '20%',height = '20%'),align='center'),
+    #                          column(4,img(src=ImageColorIndirect[6],width = '20%',height = '20%'),align='center')),
+    #                 fluidRow(column(4,HTML(paste('<font size = "3">',YuhuaNetConsumptionOutput_DirectIndirect$Block[7],'</font>')),align='center'),
+    #                          column(4,img(src=ImageColorDirect[7],width = '20%',height = '20%'),align='center'),
+    #                          column(4,img(src=ImageColorIndirect[7],width = '20%',height = '20%'),align='center'))
+    #))
+  #}
 })
 
 ## -------- Water Savings ------------- ##

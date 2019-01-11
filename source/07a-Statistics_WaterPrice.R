@@ -1,6 +1,6 @@
 local_path <- 'D:\\DataAnalyticsPortal\\'
 server_path <- '/srv/shiny-server/DataAnalyticsPortal/'
-path = local_path
+path = server_path
 
 source(paste0(path,'AutoUpdated_RScripts/ToDisconnect.R'))
 source(paste0(path,'AutoUpdated_RScripts/DB_Connections.R'))
@@ -40,7 +40,7 @@ observeEvent(input$cancel_WaterPrice,{
 
 output$LPCD_slider <- renderUI({
   sliderInput("LPCD", h3(HTML('Litres per Capita per Day (LPCD)')),
-              min=140,max=160,value=148,step= 1, width='30%')
+              min=120,max=150,value=130,step= 1, width='30%')
 })
 
 output$LPCD_Save <- renderUI({

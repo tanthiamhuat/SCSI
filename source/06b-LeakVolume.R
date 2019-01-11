@@ -1,6 +1,6 @@
 local_path <- 'D:\\DataAnalyticsPortal\\'
 server_path <- '/srv/shiny-server/DataAnalyticsPortal/'
-path = local_path
+path = server_path
 
 load(paste0(path,'data/LeakVolumePerDay_Min5Min60.RData'))
 
@@ -9,7 +9,7 @@ LeakVolumePerDayCSV <- read.csv2(paste0(path,'data/LeakVolumePerDay.csv'),header
 LeakVolumePerDayPerBlockCSV <- read.csv2(paste0(path,'data/LeakVolumePerDayPerBlock.csv'),header = TRUE,sep=",")
 
 output$LeakVolume_plot1 <- renderDygraph({
-  graph <- dygraph(LeakVolumePerDay_xts, main = "Leak Volume Per Day (Punggol)") %>%
+  graph <- dygraph(LeakVolumePerDay_xts, main = "Leak Volume Per Day") %>%
     dyRangeSelector() %>%
     dyAxis("y",label=HTML('Total Leak Per Day (Litres)')) %>%
     dyOptions(colors = c("#e41a1c","#377eb8"))

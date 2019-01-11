@@ -28,8 +28,8 @@ month_extracted <- substr(Sys.Date(),6,7)
 url <- paste("https://api-ak.wunderground.com/api/d8585d80376a429e/history_",year(today()),month_extracted,"01",gsub("-", "", end_month),
               "/lang:EN/units:english/bestfct:1/v:2.0/q/WSSS.json?showObs=0&ttl=120",sep="")
 
-#url <- 'https://api-ak.wunderground.com/api/d8585d80376a429e/history_2018090120180903/lang:EN/units:english/bestfct:1/v:2.0/q/WSSS.json?showObs=0&ttl=120'
-#url <- 'https://api-ak.wunderground.com/api/d8585d80376a429e/history_20180901/lang:EN/units:english/bestfct:1/v:2.0/q/WSSS.json?showObs=0&ttl=120'  ## one date
+#url <- 'https://api-ak.wunderground.com/api/d8585d80376a429e/history_2018120120181215/lang:EN/units:english/bestfct:1/v:2.0/q/WSSS.json?showObs=0&ttl=120'
+#url <- 'https://api-ak.wunderground.com/api/d8585d80376a429e/history_20181215/lang:EN/units:english/bestfct:1/v:2.0/q/WSSS.json?showObs=0&ttl=120'  ## one date
 
 DateStart <- substr(url,62,69)
 
@@ -48,7 +48,7 @@ MaxTemp <- list()
 AvgTemp <- list()
 MinTemp <- list()
 RainFall <- list()
-for (i in 1:length(seq(1,ndays))){
+for (i in 1:length(seq(1,round(ndays)))){
   MaxTemp[i] <- paste("history.days.summary.max_temperature",i,sep="")
   AvgTemp[i] <- paste("history.days.summary.temperature",i,sep="")
   MinTemp[i] <- paste("history.days.summary.min_temperature",i,sep="")
@@ -61,7 +61,7 @@ a1 = a[variables,]
 
 a2 = as.data.frame(as.double(a1),stringsAsFactors = FALSE)
 colnames(a2) <- "data"
-TempRF <- as.data.frame(matrix(c(a2$data), nrow = ndays, ncol = 4))
+TempRF <- as.data.frame(matrix(c(a2$data), nrow = round(ndays), ncol = 4))
 TempRF[,1:3] <- round((TempRF[,1:3]-32)*(5/9),2) # convert from Fahrenheit to Celsius
 TempRF[,4] <- round(TempRF[,4]*25.4,2) #convert from (in) to mm
 

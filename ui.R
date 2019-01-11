@@ -1,6 +1,6 @@
-local_path <- 'D:\\DataAnalyticsPortal\\'   
-server_path <- '/srv/shiny-server/DataAnalyticsPortal/'   
-path = local_path
+local_path <- 'D:\\DataAnalyticsPortal\\'
+server_path <- '/srv/shiny-server/DataAnalyticsPortal/'
+path = server_path
 
 #source("/srv/shiny-server/DataAnalyticsPortal/global.R")
 source(paste0(path,'global.R'))
@@ -10,6 +10,8 @@ source(paste0(path,'source/00-dropdownButton.R'),local=TRUE)
 #load("/srv/shiny-server/DataAnalyticsPortal/data/ZeroConsumptionCount.RData")
 load(paste0(path,'data/ZeroConsumptionCount.RData'))
 SuspectedMeters <- ZeroConsumptionCount %>% dplyr::filter(Comments=="Meter is suspected to be blocked.")
+
+load(paste0(path,'data/CustomerDailyLPCD.RData'))
 
 options(java.parameters = c("-Xss2560k", "-Xmx2g"))
 
@@ -111,10 +113,10 @@ body <- dashboardBody(
                               uiOutput('leaktrend_info'),
                               br(),
                               column(6,plotlyOutput('OverconsumptionAlarm_plot',width="100%",height="210px")),
-                              radioButtons("site_show",
-                                           label = NULL,
-                                           choices = list("Punggol" = 1,"Yuhua"=2),
-                                           selected = 1,inline = TRUE),
+                              # radioButtons("site_show",
+                              #              label = NULL,
+                              #              choices = list("Punggol" = 1,"Yuhua"=2),
+                              #              selected = 1,inline = TRUE),
                               column(6,uiOutput('netconsumption_info'))
                        )
                      )
@@ -234,12 +236,12 @@ body <- dashboardBody(
             fluidRow(column(12,textOutput("lastUpdated_MonthlyConsumption")))
     ),
     tabItem(tabName = "SO_LPCD",
-            fluidRow(column(12,dygraphOutput('WeeklyLPCD_plot'))),
-            fluidRow(br()),
-            fluidRow(column(12,downloadButton('downloadWeeklyLPCDData', 'Download'))),
-            fluidRow(br()),
-            fluidRow(column(12,textOutput("lastUpdated_WeeklyUpdate2"))),
-            fluidRow(br()),
+            # fluidRow(column(12,dygraphOutput('WeeklyLPCD_plot'))),
+            # fluidRow(br()),
+            # fluidRow(column(12,downloadButton('downloadWeeklyLPCDData', 'Download'))),
+            # fluidRow(br()),
+            # fluidRow(column(12,textOutput("lastUpdated_WeeklyUpdate2"))),
+            # fluidRow(br()),
             fluidRow(column(12,dygraphOutput('DailyLPCD_plot'))),
             fluidRow(br()),
             fluidRow(column(12,downloadButton('downloadDailyLPCDData', 'Download'))),
@@ -401,10 +403,16 @@ body <- dashboardBody(
             fluidRow(br()),
             fluidRow(column(12,textOutput("lastUpdated_CustomerSegmentation")))
     ),
-    tabItem(tabName="CP_Benchmark",
-            fluidRow(column(12,DT::dataTableOutput('CustomerProfileBenchmark_table'))),
+    tabItem(tabName="CP_CustomerDailyLPCD",
+            fluidRow(
+              column(1,selectInput("CP_FamilyID",
+                                   "Family ID",
+                                   c(unique(Punggol_DailyLPCD$FamilyID)))),
+              column(2,textOutput("CP_servicepointsn"))
+            ),
+            fluidRow(column(12,dygraphOutput("CustomerDailyLPCD_plot"))),
             fluidRow(br()),
-            fluidRow(column(12,textOutput("lastUpdated_CustomerProfileBenchmark")))
+            fluidRow(column(12,textOutput("lastUpdated_CustomerDailyLPCD")))
     ),
     tabItem(tabName="CP_WaterSavings",
             fluidRow(column(12,dygraphOutput('CustomerProfile_WaterSavings_plot'))),
@@ -697,6 +705,23 @@ body <- dashboardBody(
             uiOutput('Index_table_info'),
             fluidRow(br()),
             fluidRow(column(12,textOutput("lastUpdated_downloadIndex")))
+    ),
+    tabItem(tabName="ND_Coverage",
+            fluidRow(
+              column(11,leafletOutput('Coverage',height=820)),
+              column(1,checkboxGroupInput("sector", "Sectors:",
+                                            c("Hotel" = "Hotel",
+                                              "Retail" = "Retail",
+                                              "Wafer" = "Wafer Fabrication & Semiconductors",
+                                              "Laundry" = "Laundry",
+                                              "Biomedical" = "Biomedical Manufacturing",
+                                              "Chemicals" = "Chemicals",
+                                              "Petrochemicals" = "Petrochemicals"),
+                                          selected = c("Hotel","Petrochemicals","Chemicals")))
+            ),
+            fluidRow(
+              column(12,uiOutput('Receiver_info'))
+            )
     ),
     tabItem(tabName="DI_OndeoAWS",
             fluidRow(column(6,DT::dataTableOutput('OndeoAWS_ServicePointSn_table')),

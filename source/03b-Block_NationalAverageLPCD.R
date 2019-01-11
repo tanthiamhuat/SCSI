@@ -1,6 +1,6 @@
 local_path <- 'D:\\DataAnalyticsPortal\\'
 server_path <- '/srv/shiny-server/DataAnalyticsPortal/'
-path = local_path
+path = server_path
 
 load(paste0(path,'data/BlockRoomTypeLPCD.RData'))
 lastmonth <- month(today())-1
@@ -25,7 +25,7 @@ output$BlockLPCD_NationalAverage_plot1 <- renderPlot({
     ylab("Block LPCD (Litres per Capita per Day)") +
     scale_fill_manual(values=c("#FF7F00", "#00CC00")) + 
     geom_hline(yintercept=values.LPCD$LPCD, color="red")+
-    geom_text(aes(3, 150, label=LPCD_str, vjust=-0.81),size=6) + 
+    geom_text(aes(3, 143, label=LPCD_str, vjust=-0.81),size=6) + 
     ggtitle(title_str) + theme_grey(base_size = 18) + theme(legend.position = "bottom")
   p
 })
@@ -40,7 +40,7 @@ output$RoomTypeLPCD_NationalAverage_plot2 <- renderPlot({
     ylab("RoomType LPCD (Litres per Capita per Day)") +
     scale_fill_manual(values=c("#FF7F00", "#00CC00")) + 
     geom_hline(yintercept=values.LPCD$LPCD, color="red")+
-    geom_text(aes(4, 155, label=LPCD_str, vjust=0.0),size=6) + 
+    geom_text(aes(4, 143, label=LPCD_str, vjust=0.0),size=6) + 
     ggtitle(title_str) + theme_grey(base_size = 18) + theme(legend.position = "bottom")
   p
 })

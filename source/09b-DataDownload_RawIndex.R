@@ -1,6 +1,6 @@
 local_path <- 'D:\\DataAnalyticsPortal\\'
 server_path <- '/srv/shiny-server/DataAnalyticsPortal/'
-path = local_path
+path = server_path
 
 IndexDownload <- read.fst(paste0(path,'data/DT/IndexDownload.fst'))
 load(paste0(path,'data/Updated_DateTime_ConsumptionIndexDownload.RData'))

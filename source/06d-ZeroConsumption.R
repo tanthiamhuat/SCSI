@@ -1,6 +1,6 @@
 local_path <- 'D:\\DataAnalyticsPortal\\'
 server_path <- '/srv/shiny-server/DataAnalyticsPortal/'
-path = local_path
+path = server_path
 
 load(paste0(path,'data/ZeroConsumptionCount.RData'))
 ZeroConsumptionCSV <- read.csv2(paste0(path,'data/ZeroConsumptionCount.csv'),header = TRUE,sep=",")

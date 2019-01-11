@@ -1,5 +1,6 @@
 local_path <- 'D:\\DataAnalyticsPortal\\'
-server_path <- '/srv/shiny-server/DataAnalyticsPortal/'    
+server_path <- '/srv/shiny-server/DataAnalyticsPortal/'
+path = server_path
 
 shinyServer(function(input,output,session) {
   cat('Loading shiny\n')
@@ -50,14 +51,13 @@ shinyServer(function(input,output,session) {
              menuItem("Block", tabName = "conso", icon = icon("building-o"),
                       menuSubItem("Consumption Per Block",tabName = "BL_Consumption"),
                       menuSubItem("National Average (LPCD)", tabName = "BL_LPCD_NationalAverage"),
-                      menuSubItem("Water Savings", tabName = "BL_WatSav"),
+                   #   menuSubItem("Water Savings", tabName = "BL_WatSav"),
                       menuSubItem("Forecast", tabName = "BL_Forecast"),
                       menuSubItem("Net Consumption", tabName = "BL_NetConsumption"),
                       menuSubItem("Net Consumption Details", tabName = "BL_NetConsumptionDetails")),
              menuItem("Customer Profile", tabName = "conso", icon = icon("users"),
                       menuSubItem("Customer Segmentation", tabName = "CP_Segmentation"),
-                      menuSubItem("Benchmark", tabName = "CP_Benchmark")),
-                 #     menuSubItem("Water Savings", tabName = "CP_WaterSavings")),
+                      menuSubItem("Daily LPCD", tabName = "CP_CustomerDailyLPCD")),
              menuItem("Customer Analysis", tabName = "analysis", icon = icon("users"),
                       menuSubItem("Customer Summary", tabName = "CA_Summary"),
                       menuSubItem("Weekly LPCD", tabName = "CA_WeeklyLPCD"),
@@ -83,12 +83,14 @@ shinyServer(function(input,output,session) {
              menuItem("Data Download", tabName = "DataDownload", icon = icon("download"),
                       menuSubItem("Consumption", tabName = "DD_ConsumptionData"),
                       menuSubItem("Raw Index", tabName = "DD_RawIndexData")),
-             # menuItem("Data Inconsistency", tabName = "DataInconsistency", icon = icon("database"),
-             #          menuSubItem("Ondeo vs AWS", tabName = "DI_OndeoAWS"),
-             #          menuSubItem("Insert Time Lag", tabName = "DI_InsertTimeLag"),
-             #        #  menuSubItem("AWS Tables", tabName = "DI_AWSTables"),
-             #        #  menuSubItem("Counts Discrepancies", tabName = "DI_CountsDiscrepancies"),
-             #          menuSubItem("NA Consumption", tabName = "DI_NAConsumption")),
+             menuItem("Non Domestic", tabName = "NonDomestic", icon = icon("building-o"),
+                      menuSubItem("Coverage", tabName = "ND_Coverage")),
+             menuItem("Data Inconsistency", tabName = "DataInconsistency", icon = icon("database"),
+                      menuSubItem("Ondeo vs AWS", tabName = "DI_OndeoAWS"),
+                      menuSubItem("Insert Time Lag", tabName = "DI_InsertTimeLag"),
+                    #  menuSubItem("AWS Tables", tabName = "DI_AWSTables"),
+                    #  menuSubItem("Counts Discrepancies", tabName = "DI_CountsDiscrepancies"),
+                      menuSubItem("NA Consumption", tabName = "DI_NAConsumption")),
              menuItem("Logout", tabName = "Logout", icon = icon("sign-out")) 
            )
          })
@@ -106,7 +108,7 @@ shinyServer(function(input,output,session) {
              menuItem("Block", tabName = "conso", icon = icon("building-o"),
                       menuSubItem("Consumption Per Block",tabName = "BL_Consumption"),
                       menuSubItem("National Average", tabName = "BL_LPCD_NationalAverage"),
-                      menuSubItem("Water Savings", tabName = "BL_WatSav"),
+                   #   menuSubItem("Water Savings", tabName = "BL_WatSav"),
                       menuSubItem("Forecast", tabName = "BL_Forecast"),
                       menuSubItem("Net Consumption", tabName = "BL_NetConsumption")),
              menuItem("Customer Profile", tabName = "conso", icon = icon("users"),
@@ -156,8 +158,7 @@ shinyServer(function(input,output,session) {
           }
           if(page == 'CP'){
             source(paste0(path,'source/04a-CustomerSegmentation.R'),local = TRUE)
-            source(paste0(path,'source/04b-CustomerProfile_Benchmark.R'),local = TRUE)
-          #  source(paste0(path,'source/04c-CustomerProfile_WaterSavings.R'),local = TRUE)
+            source(paste0(path,'source/04b-CustomerDailyLPCD.R'),local = TRUE)
           }
           if(page == 'CA'){
             source(paste0(path,'source/05a-CustomerSummary.R'),local = TRUE)
@@ -189,13 +190,16 @@ shinyServer(function(input,output,session) {
             source(paste0(path,'source/09a-DataDownload_Consumption.R'),local = TRUE)
             source(paste0(path,'source/09b-DataDownload_RawIndex.R'),local = TRUE)
           }
-          # if(page == 'DI'){
-          #   source(paste0(path,'source/11a-DataInconsistency_OndeoAWS.R'),local = TRUE)
-          #   source(paste0(path,'source/11b-DataInconsistency_InsertTimeLag.R'),local = TRUE)
-          #   source(paste0(path,'source/11c-DataInconsistency_AWSTables.R'),local = TRUE)
-          #   source(paste0(path,'source/11d-DataInconsistency_CountsDiscrepancies.R'),local = TRUE)
-          #   source(paste0(path,'source/11e-DataInconsistency_NAConsumption.R'),local = TRUE)
-          # }
+          if(page == 'ND'){
+            source(paste0(path,'source/10a-NonDomestic_Coverage.R'),local = TRUE)
+          }
+          if(page == 'DI'){
+            source(paste0(path,'source/11a-DataInconsistency_OndeoAWS.R'),local = TRUE)
+            source(paste0(path,'source/11b-DataInconsistency_InsertTimeLag.R'),local = TRUE)
+            source(paste0(path,'source/11c-DataInconsistency_AWSTables.R'),local = TRUE)
+            source(paste0(path,'source/11d-DataInconsistency_CountsDiscrepancies.R'),local = TRUE)
+            source(paste0(path,'source/11e-DataInconsistency_NAConsumption.R'),local = TRUE)
+          }
           values.loadedPages$pages <- c(values.loadedPages$pages,page)
         }
       })

@@ -1,3 +1,4 @@
+load("/srv/shiny-server/DataAnalyticsPortal/data/Updated_DateTime_HourlyCons.RData")
 if (input$so_site=='0'){
   X <- Punggol_SUB
 }else{

@@ -1,6 +1,6 @@
 local_path <- 'D:\\DataAnalyticsPortal\\'
 server_path <- '/srv/shiny-server/DataAnalyticsPortal/'
-path = local_path
+path = server_path
 
 load(paste0(path,'Profiling_V2/Output/01-Punggol_Indicators.RData'))
 load(paste0(path,'Profiling_V2/Output/04-Final_Profile.RData'))

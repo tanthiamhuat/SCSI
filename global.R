@@ -1,9 +1,9 @@
-local_path <- 'D:\\DataAnalyticsPortal\\'   
-server_path <- '/srv/shiny-server/DataAnalyticsPortal/'  
-path = local_path   
+local_path <- 'D:\\DataAnalyticsPortal\\'
+server_path <- '/srv/shiny-server/DataAnalyticsPortal/'
+path = server_path
 
 ### Packages
-# Install function for packages       
+# Install function for packages    
 packages<-function(x){
   x<-as.character(match.call()[[2]])
   if (!require(x,character.only=TRUE)){

@@ -1,6 +1,6 @@
 local_path <- 'D:\\DataAnalyticsPortal\\'
 server_path <- '/srv/shiny-server/DataAnalyticsPortal/'
-path = local_path
+path = server_path
 
 load(paste0(path,'data/DT/Punggol_WeeklyLPCD.RData'))
 load(paste0(path,'data/Weekly_Occupancy_xts.RData'))
@@ -35,7 +35,7 @@ output$DailyLPCD_plot <- renderDygraph({
   graph <-  dygraph(DailyLPCD_Occupancy_xts,main="Daily LPCD and Occupancy") %>%
     dyRangeSelector() %>%
     dyAxis("y",label=HTML('Daily LPCD'),valueRange = c(110, 170)) %>%
-    dyAxis("y2", label=HTML('Daily Occupancy (%)'),valueRange = c(35, 95),independentTicks = TRUE) %>%
+    dyAxis("y2", label=HTML('Daily Occupancy (%)'),valueRange = c(0, 95),independentTicks = TRUE) %>%
     dySeries("DailyOccupancy", axis = 'y2')
   graph
 })

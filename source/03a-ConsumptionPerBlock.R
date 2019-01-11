@@ -1,3 +1,4 @@
+load("/srv/shiny-server/DataAnalyticsPortal/data/Updated_DateTime_HourlyCons.RData")
 #X <- Punggol_SUB
 X$Date.Time <- X$Date.Time-lubridate::hours(8)
 

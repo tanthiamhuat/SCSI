@@ -1,6 +1,6 @@
 local_path <- 'D:\\DataAnalyticsPortal\\'
 server_path <- '/srv/shiny-server/DataAnalyticsPortal/'
-path = local_path
+path = server_path
 
 library(gdata)
 output$sgp_aws <- renderLeaflet({
@@ -14,7 +14,7 @@ output$sgp_aws <- renderLeaflet({
   
    leafIcons <- icons(
     iconUrl = ifelse(PunggolYuhuaTuas_TransmitterReceiver$Type=="Receiver",
-                     "http://52.74.103.158/icon/receiver.png",
+                     "http://52.74.103.158/icon/receiver.png",  # /var/www/html/icon/
               ifelse(PunggolYuhuaTuas_TransmitterReceiver$Type=="Transmitter" &
                      PunggolYuhuaTuas_TransmitterReceiver$ReadingRate >= 90,       
                      "http://52.74.103.158/icon/green_transmitter.png",
@@ -34,7 +34,9 @@ output$sgp_aws <- renderLeaflet({
                popup=ifelse(PunggolYuhuaTuas_TransmitterReceiver$Type=="Receiver",
                             paste(PunggolYuhuaTuas_TransmitterReceiver$customer," (",PunggolYuhuaTuas_TransmitterReceiver$ReadingRate,")",sep=""),
                             paste(PunggolYuhuaTuas_TransmitterReceiver$customer," (",PunggolYuhuaTuas_TransmitterReceiver$ReadingRate,"%)",sep="")),
-               icon = leafIcons) 
+               icon = leafIcons) %>%
+               addCircles(lng = 103.9060, lat = 1.400675, radius = 110)
+    
 })
 
 output$Map_info <- renderUI({

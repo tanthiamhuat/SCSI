@@ -1,24 +1,11 @@
 local_path <- 'D:\\DataAnalyticsPortal\\'
 server_path <- '/srv/shiny-server/DataAnalyticsPortal/'
-path = local_path
+path = server_path
 
 load(paste0(path,'data/block_forecast.RData'))
 
-if (format(Sys.time(), format="%H:%M:%S") < "11:40:00" & weekdays(today(), abbreviate = FALSE)=="Monday")  
-{
-  weeknumber <- as.numeric(strftime(today()-1,format="%W")) 
-} else {
-  weeknumber <- as.numeric(strftime(today(),format="%W")) 
-}
-if (weeknumber <= 10) {
-  weeknumber <- paste(0,weeknumber-1,sep="")
-} else {
-  weeknumber <- weeknumber-1 
-}
-
-WeekNumber <- paste(year(today()),"_",weeknumber,sep="") 
-if (WeekNumber=="2018_00"){ WeekNumber="2017_52"}
-block_forecast_result <- block_forecast_result %>% dplyr::filter(week_number==WeekNumber) %>% as.data.frame()
+WeekNumber <- max(block_forecast_result$week_number)
+block_forecast_result <- tail(block_forecast_result,12) %>% as.data.frame()
 block_forecast_result <- block_forecast_result %>% 
                          dplyr::mutate(TotalActualConsumption=TotalActualConsumption/1000,
                                        TotalForecastedConsumption=TotalForecastedConsumption/1000)

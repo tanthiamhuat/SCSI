@@ -1,6 +1,6 @@
 local_path <- 'D:\\DataAnalyticsPortal\\'
 server_path <- '/srv/shiny-server/DataAnalyticsPortal/'
-path = local_path
+path = server_path
 
 # https://github.com/ThomasSiegmund/D3TableFilter
 # https://thomassiegmund.shinyapps.io/interaction/
@@ -76,15 +76,15 @@ observeEvent(input$save_leak,{
     for(i in 1:length(EditDF$valEdit)){
       EditDF$df.leaks[EditDF$rowEdit[i],EditDF$colEdit[i]] <- EditDF$valEdit[i]
     }
-    write.csv2(EditDF$df.leaks,file=paste0(path,'data/leak_alarm_PunggolYuhua.csv'),row.names=FALSE, sep = ",")
+    write.csv2(EditDF$df.leaks,file="/srv/shiny-server/DataAnalyticsPortal/data/leak_alarm_PunggolYuhua.csv",row.names=FALSE, sep = ",")
     # once all the modifications have been done, we clear the row/col/val
     EditDF$rowEdit <- c()
     EditDF$colEdit <- c()
     EditDF$valEdit <- c()
   }
   #leak_alarm_PunggolYuhua <- read.csv2("/srv/shiny-server/DataAnalyticsPortal/data/leak_alarm_PunggolYuhua.csv", header = TRUE, sep = ",",fill = TRUE,stringsAsFactors=FALSE)
-  leak_alarm_PunggolYuhua <- fread(paste0(path,'data/leak_alarm_PunggolYuhua.csv'),showProgress = T)
-  save(leak_alarm_PunggolYuhua,file=paste0(path,'data/leak_alarm_PunggolYuhua.RData'))
+  leak_alarm_PunggolYuhua <- fread("/srv/shiny-server/DataAnalyticsPortal/data/leak_alarm_PunggolYuhua.csv",showProgress = T)
+  save(leak_alarm_PunggolYuhua,file="/srv/shiny-server/DataAnalyticsPortal/data/leak_alarm_PunggolYuhua.RData")
 })
 
 output$downloadLeakSeverityData <- downloadHandler(

@@ -1,6 +1,6 @@
 local_path <- 'D:\\DataAnalyticsPortal\\'
 server_path <- '/srv/shiny-server/DataAnalyticsPortal/'
-path = local_path
+path = server_path
 
 # because of non-interpolated, with minutes values, which need to round off the hour
 X <- X %>% dplyr::mutate(Date.Time=round_date(ymd_hms(date_consumption),"hour")) 

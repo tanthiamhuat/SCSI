@@ -1,6 +1,6 @@
 local_path <- 'D:\\DataAnalyticsPortal\\'
 server_path <- '/srv/shiny-server/DataAnalyticsPortal/'
-path = local_path
+path = server_path
 
 load(paste0(path,'data/BlockWaterSavings.RData'))
 BlockWaterSavingsValuesPlot <- BlockWaterSavingsValues[1:5,]

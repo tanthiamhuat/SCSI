@@ -1,8 +1,8 @@
 local_path <- 'D:\\DataAnalyticsPortal\\'
 server_path <- '/srv/shiny-server/DataAnalyticsPortal/'
-path = local_path
+path = server_path
 
-#library(latticeExtra)
+library(latticeExtra)
 load(paste0(path,'data/CustomerSummary.RData'))
 CustomerAgeRangeCSV_PG <- read.csv2(paste0(path,'data/CustomerAgeRange_PG.csv'),header = TRUE,sep=",")
 CustomerAgeRangeCSV_YH <- read.csv2(paste0(path,'data/CustomerAgeRange_YH.csv'),header = TRUE,sep=",")
