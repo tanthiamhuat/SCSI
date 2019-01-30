@@ -1,7 +1,0 @@
-https://www.spgroup.com.sg/what-we-do/billing
-National Average Household Consumption Per Premise Type Per Month.
-
-pacman::p_load(rvest)
-(read_html("https://www.spgroup.com.sg/what-we-do/billing") %>%
-  html_nodes("table") %>% 
-  html_table())[[4]]
